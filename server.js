@@ -3,10 +3,10 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(express.json());
 
 // Test route
 app.get('/test', (req, res) => {
@@ -30,43 +30,22 @@ db.connect(err => {
 });
 
 // Add School
-// Add School
-// Add School (improved)
 app.post('/addSchool', (req, res) => {
-  try {
-    // Debug: uncomment while testing
-    // console.log("Received body:", req.body);
+  const { name, address, latitude, longitude } = req.body;
 
-    const { name, address, latitude, longitude } = req.body || {};
-
-    // required fields
-    if (!name || !address || latitude === undefined || longitude === undefined) {
-      return res.status(400).json({ error: 'All fields are required: name, address, latitude, longitude' });
-    }
-
-    // check numeric lat/lng
-    const lat = parseFloat(latitude);
-    const lng = parseFloat(longitude);
-    if (!isFinite(lat) || !isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-      return res.status(400).json({ error: 'latitude and longitude must be valid numbers (lat: -90..90, lng: -180..180)' });
-    }
-
-    const sql = 'INSERT INTO schools (name, address, latitude, longitude) VALUES (?, ?, ?, ?)';
-    db.query(sql, [name, address, lat, lng], (err, result) => {
-      if (err) {
-        console.error('DB insert error:', err);
-        return res.status(500).json({ error: 'Database insert failed' });
-      }
-      res.status(201).json({ message: 'School added successfully', id: result.insertId });
-    });
-  } catch (e) {
-    console.error('Unexpected error in /addSchool:', e);
-    return res.status(500).json({ error: 'Internal Server Error' });
+  if (!name || !address || !latitude || !longitude) {
+    return res.status(400).json({ error: 'All fields are required' });
   }
+
+  const sql = 'INSERT INTO schools (name, address, latitude, longitude) VALUES (?, ?, ?, ?)';
+  db.query(sql, [name, address, latitude, longitude], (err, result) => {
+    if (err) {
+      console.error('DB insert error:', err.sqlMessage);
+      return res.status(500).json({ error: 'Database insert failed', details: err.sqlMessage });
+    }
+    res.json({ message: 'School added successfully', id: result.insertId });
+  });
 });
-
-
-
 
 // List Schools
 app.get('/listSchools', (req, res) => {
@@ -86,7 +65,10 @@ app.get('/listSchools', (req, res) => {
     ORDER BY distance ASC
   `;
   db.query(sql, [latitude, longitude, latitude], (err, results) => {
-    if (err) throw err;
+    if (err) {
+      console.error('DB query error:', err.sqlMessage);
+      return res.status(500).json({ error: 'Database query failed', details: err.sqlMessage });
+    }
     res.json(results);
   });
 });
