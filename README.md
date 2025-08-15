@@ -23,3 +23,10 @@ This project is designed to perform basic operations such as adding schools and 
 ---
 
 ## 📂 Project Structure
+school-management-api/
+│
+├── .gitignore # Ignored files for Git
+├── README.md # Documentation
+├── package.json # Dependencies and scripts
+├── package-lock.json # Dependency lock file
+└── server.js # Main API server file
