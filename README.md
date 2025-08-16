@@ -63,3 +63,18 @@ Use /addSchool and /listSchools to test CRUD functionality
 
 Ensure your MySQL database is running with the correct credentials in .env
 
+What I Learned
+
+Setting up a Node.js + Express backend
+
+MySQL integration with REST APIs
+
+Using Postman for testing endpoints
+
+Preparing apps for cloud deploymen
+
+Author
+
+Darshan Santhose
+
+
