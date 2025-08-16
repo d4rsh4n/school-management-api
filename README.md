@@ -1,32 +1,65 @@
-# School Management API
+#  School Management API
 
-A simple RESTful API built with **Node.js**, **Express**, and **MySQL** for managing school data.  
-This project is designed to perform basic operations such as adding schools and retrieving school details.
-
----
-
-## 🚀 Features
-- Add a new school with details like name, address, and contact information.
-- Retrieve a list of all schools.
-- REST API with JSON responses.
-- MySQL database integration.
-- Easy to deploy on platforms like Railway.
+A School Management API built with **Node.js, Express, and MySQL**.  
+It provides RESTful endpoints for managing school data with CRUD functionality, input validation, and database integration.  
+Tested with **Postman** and prepared for deployment via **Railway**.
 
 ---
 
-## 🛠 Tech Stack
-- **Backend**: Node.js, Express
-- **Database**: MySQL
-- **Hosting**: Railway
-- **Testing**: Postman
+##  Features
+- Create, read, update, and delete school records
+- Input validation with error handling
+- RESTful architecture (JSON-based)
+- Tested using Postman
+- Ready for cloud deployment (Railway)
+
+---
+
+##  Tech Stack
+- **Backend:** Node.js, Express.js  
+- **Database:** MySQL  
+- **Tools:** Postman, Railway, Git, GitHub  
 
 ---
 
 ## 📂 Project Structure
-school-management-api/
-│
-├── .gitignore # Ignored files for Git
-├── README.md # Documentation
+├── server.js # Main server file
 ├── package.json # Dependencies and scripts
-├── package-lock.json # Dependency lock file
-└── server.js # Main API server file
+├── .gitignore # Ignored files
+├── README.md # Project documentation
+└── a.distance # (Temporary file - can be removed if unused)
+
+---
+
+## ⚡ Endpoints
+
+| Method | Endpoint          | Description                |
+|--------|-------------------|----------------------------|
+| POST   | /addSchool        | Add a new school           |
+| GET    | /listSchools      | Get all schools            |
+
+---
+
+## 💻 Installation & Setup
+
+```bash
+# Clone the repo
+git clone https://github.com/d4rsh4n/school-management-api.git
+
+# Navigate into the project
+cd school-management-api
+
+# Install dependencies
+npm install
+
+# Run the server
+node server.js
+
+Testing with Postman
+
+Import the API collection into Postman
+
+Use /addSchool and /listSchools to test CRUD functionality
+
+Ensure your MySQL database is running with the correct credentials in .env
+
